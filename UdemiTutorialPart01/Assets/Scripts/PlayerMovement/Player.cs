@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using SpaceShipDatas;
+using Obstacles;
 
 public class Player : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class Player : MonoBehaviour
 
     [Header("Player Data")]
     public PlayerDatas[] playerDatas;
-    
+    public ObstacleDatas[] obstacleDatas;
     #endregion
 
     #region Private_Variables
@@ -30,27 +32,17 @@ public class Player : MonoBehaviour
     
     #endregion
 
+    void Awake()
+    {
+        playerDatas = Resources.LoadAll("Datas/SpaceShipMovement", typeof(PlayerDatas)).Cast<PlayerDatas>().ToArray();
+        obstacleDatas = Resources.LoadAll("Datas/ObstacleAndItem", typeof(ObstacleDatas)).Cast<ObstacleDatas>().ToArray();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        string choosenSpaceShip = PlayerPrefs.GetString("TheChoosenOne");
-        
-
-        for (int i = 0; i < playerDatas.Length; i++)
-        {
-            if (playerDatas[i].spaceShipName == choosenSpaceShip)
-            {
-                //set this gameobject as parent and generate prefabs inside it
-                spaceShipModel = (GameObject)Instantiate(playerDatas[i].ssModel, this.transform.position, Quaternion.identity, this.transform);
-                
-                //Get this spaceship datas
-                spaceShipName = playerDatas[i].spaceShipName;
-                spaceShipHP = playerDatas[i].hp;
-                movementSpeed = playerDatas[i].movementSpeed;
-            }
-        }
+        SpaceShipCaller();
 
     }
 
@@ -60,6 +52,37 @@ public class Player : MonoBehaviour
 
         PlayerControl("MovingLeft", "MovingRight", movementSpeed);
 
+        //collider system
+        //HP System
+        if (spaceShipHP == 0)
+        {
+            //Destroy SpaceShip Model and call Game Over GUI
+        }
+        else
+        {
+            //Score Added due to the how long player survive
+        }
+
+    }
+
+    void SpaceShipCaller()
+    {
+        string choosenSpaceShip = PlayerPrefs.GetString("TheChoosenOne");
+
+
+        for (int i = 0; i < playerDatas.Length; i++)
+        {
+            if (playerDatas[i].spaceShipName == choosenSpaceShip)
+            {
+                //set this gameobject as parent and generate prefabs inside it
+                spaceShipModel = (GameObject)Instantiate(playerDatas[i].ssModel, this.transform.position, Quaternion.identity, this.transform);
+
+                //Get this spaceship datas
+                spaceShipName = playerDatas[i].spaceShipName;
+                spaceShipHP = playerDatas[i].hp;
+                movementSpeed = playerDatas[i].movementSpeed;
+            }
+        }
     }
 
     #region PlayerAction
@@ -84,20 +107,62 @@ public class Player : MonoBehaviour
 
     #region Collider_Unity
 
-    void WallCollider()
+    void OnTriggerEnter(Collider other)
     {
+
+        if (other.gameObject.name.Contains("Blue Scifi Rock 1"))//if strings contain some specified string
+        {
+            
+            for (int i = 0; i < obstacleDatas.Length; i++)
+            {
+                if (obstacleDatas[i].itemName == "Fuel")
+                {
+                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                    Debug.Log("spaceShipHP = " + spaceShipHP);
+                    Destroy(other.gameObject);//3 times added??? fix it 
+                }
+            }
+
+        }
 
     }
 
-    void GotHit()
+    void OnCollisionEnter(Collision col)
     {
+        //can't be detected
+        if (col.gameObject.name == "Asteroid Lava Blue")
+        {
+
+            for (int i = 0; i < obstacleDatas.Length; i++)
+            {
+
+                if (obstacleDatas[i].itemName == "Asteroid01")
+                {
+                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                    Debug.Log("spaceShipHP = " + spaceShipHP + " - " + obstacleDatas[i].additionalHP);
+                }
+
+            }
+
+        }
+        else if (col.gameObject.name == "Asteroid Lava Red")
+        {
+            
+            for (int i = 0; i < obstacleDatas.Length; i++)
+            {
+                
+                if (obstacleDatas[i].itemName == "Asteroid02")
+                {
+                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                    Debug.Log("spaceShipHP = " + spaceShipHP + " - " + obstacleDatas[i].additionalHP);
+                }
+
+            }
+
+        }
 
     }
 
-    void ItemBooster()
-    {
-
-    }
 
     #endregion
 

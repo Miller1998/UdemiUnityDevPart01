@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     // Awake is called when the scene started
     void Awake()
     {
-        PlayerPrefs.SetString("TheChoosenOne", player.playerDatas[1].spaceShipName);
+        PlayerPrefs.SetString("TheChoosenOne", player.playerDatas[0].spaceShipName);
     }
 
     // Start is called before the first frame update

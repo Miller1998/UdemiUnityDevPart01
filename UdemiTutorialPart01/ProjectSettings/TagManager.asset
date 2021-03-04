@@ -7,6 +7,8 @@ TagManager:
   - WallCollider
   - AsteroidCollider
   - ItemCollider
+  - SpaceShip
+  - FuelCollider
   layers:
   - Default
   - TransparentFX

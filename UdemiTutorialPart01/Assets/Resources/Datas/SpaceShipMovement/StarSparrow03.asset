@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79afa5204c84fc944a468337870b4b3d, type: 3}
-  m_Name: StarSparrow
+  m_Name: StarSparrow03
   m_EditorClassIdentifier: 
-  spaceShipName: StarSparrow01
-  spaceShipDesc: 
-  hp: 5
-  movementSpeed: 30
-  ssModel: {fileID: 1510364872509504, guid: f805c7b2f982faf43833878e4f22ae2a, type: 3}
+  spaceShipName: StarSparrow03
+  spaceShipDesc: Standard Navy StarShip
+  hp: 7
+  movementSpeed: 40
+  ssModel: {fileID: 1105741334745168, guid: dc92f6c59177d3b48834d869261d80b1, type: 3}
