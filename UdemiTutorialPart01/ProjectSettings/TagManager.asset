@@ -5,10 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - WallCollider
-  - AsteroidCollider
   - ItemCollider
   - SpaceShip
   - FuelCollider
+  - Asteroid01Collider
+  - Asteroid02Collider
   layers:
   - Default
   - TransparentFX

@@ -5,8 +5,13 @@ using SpaceShipDatas;
 
 public class GameManager : MonoBehaviour
 {
-
+    [Header("GameObject Caller")]
     public Player player;
+    public GameObject cam;
+
+    [Header("playerSumary")]
+    [SerializeField]
+    private int totalScore;
 
     // Awake is called when the scene started
     void Awake()
@@ -24,5 +29,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+
+        if (player.spaceShipHP <= 0)
+        {
+            cam.transform.parent = null;
+            totalScore = PlayerPrefs.GetInt("HighScore");
+            //show score @ UI
+        }
+
     }
 }

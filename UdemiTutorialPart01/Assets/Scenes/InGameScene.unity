@@ -622,9 +622,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDatas: []
   obstacleDatas: []
+  scoreTotal: 0
+  spaceShipHP: 0
   spaceShipModel: {fileID: 0}
   spaceShipName: 
-  spaceShipHP: 0
   movementSpeed: 0
 --- !u!4 &1262675097
 Transform:
@@ -701,6 +702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1262675096}
+  cam: {fileID: 963194225}
+  totalScore: 0
 --- !u!1001 &1533785415
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,11 @@ public class Player : MonoBehaviour
     [Header("Player Data")]
     public PlayerDatas[] playerDatas;
     public ObstacleDatas[] obstacleDatas;
+
+    [Header("Player")]
+    public int scoreTotal = 0;
+    public int spaceShipHP = 0;
+
     #endregion
 
     #region Private_Variables
@@ -23,13 +28,11 @@ public class Player : MonoBehaviour
     [Header("Player Data")]
     [SerializeField]
     private string spaceShipName = "";
-    [SerializeField]
-    private int spaceShipHP = 0;
+
 
     [Header("Space Ship Movement")]
     [SerializeField]
     private float movementSpeed = 0;
-    
     #endregion
 
     void Awake()
@@ -54,14 +57,17 @@ public class Player : MonoBehaviour
 
         //collider system
         //HP System
-        if (spaceShipHP == 0)
+        if (spaceShipHP <= 0)
         {
             //Destroy SpaceShip Model and call Game Over GUI
+            Destroy(spaceShipModel.gameObject);
         }
-        else
+        /*else
         {
             //Score Added due to the how long player survive
-        }
+            scoreTotal = scoreTotal + 2;
+            //Debug.Log("Total Score : " + scoreTotal);
+        }*/
 
     }
 
@@ -110,65 +116,67 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.name.Contains("Blue Scifi Rock 1"))//if strings contain some specified string
+        /*if (other.gameObject.tag == "FuelCollider")
         {
-            
+            Destroy(other.gameObject);
+
             for (int i = 0; i < obstacleDatas.Length; i++)
             {
                 if (obstacleDatas[i].itemName == "Fuel")
                 {
+
                     spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                    Debug.Log("spaceShipHP = " + spaceShipHP);
-                    Destroy(other.gameObject);//3 times added??? fix it 
+                    Debug.Log("SpaceShip HP : " + spaceShipHP);
+
                 }
             }
 
-        }
+        }//Can be like this or...*/
+
+        for (int i = 0; i < obstacleDatas.Length; i++)
+        {
+            
+            if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Fuel"))
+            {
+                
+                Destroy(other.gameObject);
+                spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                Debug.Log("SpaceShip HP : " + spaceShipHP);
+                
+                //added score based on how many Fuel that we get
+                scoreTotal = scoreTotal + 5;
+                //save in the game data
+                PlayerPrefs.SetInt("HighScore", scoreTotal);
+            
+            }
+        
+        }//this...
 
     }
 
     void OnCollisionEnter(Collision col)
     {
-        //can't be detected
-        if (col.gameObject.name == "Asteroid Lava Blue")
-        {
-
-            for (int i = 0; i < obstacleDatas.Length; i++)
-            {
-
-                if (obstacleDatas[i].itemName == "Asteroid01")
-                {
-                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                    Debug.Log("spaceShipHP = " + spaceShipHP + " - " + obstacleDatas[i].additionalHP);
-                }
-
-            }
-
-        }
-        else if (col.gameObject.name == "Asteroid Lava Red")
+        
+        for (int i = 0; i < obstacleDatas.Length; i++)
         {
             
-            for (int i = 0; i < obstacleDatas.Length; i++)
+            if (col.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid01"))
             {
-                
-                if (obstacleDatas[i].itemName == "Asteroid02")
-                {
-                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                    Debug.Log("spaceShipHP = " + spaceShipHP + " - " + obstacleDatas[i].additionalHP);
-                }
-
+                Destroy(col.gameObject);
+                spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                Debug.Log("SpaceShip HP : " + spaceShipHP);
+            }
+            else if (col.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid02"))
+            {
+                Destroy(col.gameObject);
+                spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
+                Debug.Log("SpaceShip HP : " + spaceShipHP);
             }
 
         }
 
     }
 
-
     #endregion
-
-    void DestroySelf()
-    {
-        //destroying SpaceShip
-    }
 
 }
