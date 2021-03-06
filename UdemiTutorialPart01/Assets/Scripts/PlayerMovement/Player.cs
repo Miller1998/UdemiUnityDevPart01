@@ -116,23 +116,6 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 
-        /*if (other.gameObject.tag == "FuelCollider")
-        {
-            Destroy(other.gameObject);
-
-            for (int i = 0; i < obstacleDatas.Length; i++)
-            {
-                if (obstacleDatas[i].itemName == "Fuel")
-                {
-
-                    spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                    Debug.Log("SpaceShip HP : " + spaceShipHP);
-
-                }
-            }
-
-        }//Can be like this or...*/
-
         for (int i = 0; i < obstacleDatas.Length; i++)
         {
             
@@ -141,38 +124,27 @@ public class Player : MonoBehaviour
                 
                 Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                Debug.Log("SpaceShip HP : " + spaceShipHP);
+                //Debug.Log("SpaceShip HP : " + spaceShipHP);
                 
                 //added score based on how many Fuel that we get
                 scoreTotal = scoreTotal + 5;
                 //save in the game data
-                PlayerPrefs.SetInt("HighScore", scoreTotal);
+                PlayerPrefs.SetInt("TotalScore", scoreTotal);
             
             }
-        
-        }//this...
-
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        
-        for (int i = 0; i < obstacleDatas.Length; i++)
-        {
-            
-            if (col.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid01"))
+            else if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid01"))
             {
-                Destroy(col.gameObject);
+                Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                Debug.Log("SpaceShip HP : " + spaceShipHP);
+                //Debug.Log("SpaceShip HP : " + spaceShipHP);
             }
-            else if (col.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid02"))
+            else if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid02"))
             {
-                Destroy(col.gameObject);
+                Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                Debug.Log("SpaceShip HP : " + spaceShipHP);
+                //Debug.Log("SpaceShip HP : " + spaceShipHP);
             }
-
+        
         }
 
     }
