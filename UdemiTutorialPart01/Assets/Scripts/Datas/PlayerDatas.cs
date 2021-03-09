@@ -28,6 +28,8 @@ namespace SpaceShipDatas
 
         [Header("SpaceShip Model")]
         public GameObject ssModel;
+        public AudioClip jetSFX;
+        public AudioClip destroyedSFX;
 
         #endregion
     }

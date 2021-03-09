@@ -17,3 +17,4 @@ MonoBehaviour:
   additionalHP: -4
   movementSpeed: 40
   itemModel: {fileID: 1056666096333670, guid: f603e71ddc270d54192200e95673e2a6, type: 3}
+  destroySFX: {fileID: 8300000, guid: 8ce0ab9dbec26f247a3612a9aae23427, type: 3}

@@ -17,3 +17,5 @@ MonoBehaviour:
   hp: 5
   movementSpeed: 30
   ssModel: {fileID: 1820494407919854, guid: 0478b1e28fd9831458b0f051b9d2ad8b, type: 3}
+  jetSFX: {fileID: 8300000, guid: 722d46d1d7e841d4fb875bc36cd1d5af, type: 3}
+  destroyedSFX: {fileID: 8300000, guid: 7b900d8866fd9664daed7b95a03058e7, type: 3}

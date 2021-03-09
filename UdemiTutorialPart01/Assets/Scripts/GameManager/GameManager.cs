@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int playerScore;
     [SerializeField]
     private int highScore;
+    [SerializeField]
+    bool pmActive = false;
 
     // Awake is called when the scene started
     void Awake()
@@ -65,8 +67,6 @@ public class GameManager : MonoBehaviour
             GameOverMenu.gameObject.SetActive(false);
             PlayerMenu.gameObject.SetActive(true);
         }
-
-        PauseMenuSetUp();
 
     }
 
@@ -110,6 +110,19 @@ public class GameManager : MonoBehaviour
 
     public void PauseMenuSetUp()
     {
+
+        pmActive = !pmActive;
+        
+        if (pmActive == true)
+        {
+            Time.timeScale = 0;
+            PauseMenu.gameObject.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            PauseMenu.gameObject.SetActive(false);
+        }
 
     }
 

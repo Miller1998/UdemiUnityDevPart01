@@ -29,6 +29,7 @@ namespace Obstacles
 
         [Header("SpaceShip Model")]
         public GameObject itemModel;
+        public AudioClip destroySFX;
 
         #endregion
     

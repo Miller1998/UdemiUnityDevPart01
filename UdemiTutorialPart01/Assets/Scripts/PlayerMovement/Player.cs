@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     [Header("Player Data")]
     public PlayerDatas[] playerDatas;
     public ObstacleDatas[] obstacleDatas;
+    
+    [Header("SFX Caller")]
+    public AudioSource shipSFX;
+    public AudioSource jetEngineSFX;
 
     [Header("Player")]
     public int scoreTotal = 0;
@@ -24,12 +28,14 @@ public class Player : MonoBehaviour
     [Header("Game Object Caller")]
     [SerializeField]
     private GameObject spaceShipModel;
+    private AudioClip jetSFX;
+    private AudioClip desSFX;
+    private AudioClip obstacleSFX;
 
     [Header("Player Data")]
     [SerializeField]
     private string spaceShipName = "";
-
-
+    
     [Header("Space Ship Movement")]
     [SerializeField]
     private float movementSpeed = 0;
@@ -59,15 +65,17 @@ public class Player : MonoBehaviour
         //HP System
         if (spaceShipHP <= 0)
         {
+            //playing destroy vfx and sfx
+            AudioSource.PlayClipAtPoint(desSFX, this.transform.position);
             //Destroy SpaceShip Model and call Game Over GUI
             Destroy(spaceShipModel.gameObject);
         }
-        /*else
+        else
         {
             //Score Added due to the how long player survive
             scoreTotal = scoreTotal + 2;
-            //Debug.Log("Total Score : " + scoreTotal);
-        }*/
+            PlayerPrefs.SetInt("TotalScore", scoreTotal);
+        }
 
     }
 
@@ -80,6 +88,7 @@ public class Player : MonoBehaviour
         {
             if (playerDatas[i].spaceShipName == choosenSpaceShip)
             {
+                
                 //set this gameobject as parent and generate prefabs inside it
                 spaceShipModel = (GameObject)Instantiate(playerDatas[i].ssModel, this.transform.position, Quaternion.identity, this.transform);
 
@@ -87,6 +96,13 @@ public class Player : MonoBehaviour
                 spaceShipName = playerDatas[i].spaceShipName;
                 spaceShipHP = playerDatas[i].hp;
                 movementSpeed = playerDatas[i].movementSpeed;
+                jetSFX = playerDatas[i].jetSFX;
+                desSFX = playerDatas[i].destroyedSFX;
+
+                jetEngineSFX.clip = jetSFX;
+                jetEngineSFX.loop = true;
+                jetEngineSFX.Play();
+
             }
         }
     }
@@ -121,28 +137,32 @@ public class Player : MonoBehaviour
             
             if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Fuel"))
             {
-                
+
+                shipSFX.PlayOneShot(obstacleDatas[i].destroySFX);                       
                 Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                //Debug.Log("SpaceShip HP : " + spaceShipHP);
                 
                 //added score based on how many Fuel that we get
-                scoreTotal = scoreTotal + 5;
+                //scoreTotal = scoreTotal + 2;
                 //save in the game data
-                PlayerPrefs.SetInt("TotalScore", scoreTotal);
+                //PlayerPrefs.SetInt("TotalScore", scoreTotal);
             
             }
             else if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid01"))
             {
+
+                shipSFX.PlayOneShot(obstacleDatas[i].destroySFX); 
                 Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                //Debug.Log("SpaceShip HP : " + spaceShipHP);
+            
             }
             else if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid02"))
             {
+
+                shipSFX.PlayOneShot(obstacleDatas[i].destroySFX); 
                 Destroy(other.gameObject);
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
-                //Debug.Log("SpaceShip HP : " + spaceShipHP);
+            
             }
         
         }
