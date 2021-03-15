@@ -503,7 +503,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.6}
   m_AnchorMax: {x: 0.5, y: 0.7}
-  m_AnchoredPosition: {x: -64, y: -107.099945}
+  m_AnchoredPosition: {x: -64.00001, y: -107.099945}
   m_SizeDelta: {x: 127.999985, y: 44.999985}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &203659885
@@ -1187,10 +1187,8 @@ MonoBehaviour:
   invisibleTrack: {fileID: 6838807784434047973, guid: 987c9494a7b1247478a25295f211730c,
     type: 3}
   parentTrack: {fileID: 25843437}
-  challengePlayerEvery: 20
   generatedSpeed: 10
   deletionDistance: -200
-  addSpeed: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDatas: []
   obstacleDatas: []
+  rbPlayer: {fileID: 1262675098}
   shipSFX: {fileID: 2142163703}
   jetEngineSFX: {fileID: 1687797888}
   scoreTotal: 0
@@ -2638,7 +2637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262675095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}

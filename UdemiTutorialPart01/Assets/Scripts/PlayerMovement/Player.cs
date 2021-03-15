@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [Header("Player Data")]
     public PlayerDatas[] playerDatas;
     public ObstacleDatas[] obstacleDatas;
+    public Rigidbody rbPlayer;
     
     [Header("SFX Caller")]
     public AudioSource shipSFX;
@@ -39,6 +40,28 @@ public class Player : MonoBehaviour
     [Header("Space Ship Movement")]
     [SerializeField]
     private float movementSpeed = 0;
+    private float dirX;
+    #endregion
+
+    #region Android or Editor detector
+    public class ApplicationUtil
+    {
+        public static RuntimePlatform platform
+        {
+            get
+            {
+#if UNITY_ANDROID
+                return RuntimePlatform.Android;
+#elif UNITY_IOS
+                 return RuntimePlatform.IPhonePlayer;
+#elif UNITY_STANDALONE_OSX
+                 return RuntimePlatform.OSXPlayer;
+#elif UNITY_STANDALONE_WIN
+                 return RuntimePlatform.WindowsPlayer;
+#endif
+            }
+        }
+    }
     #endregion
 
     void Awake()
@@ -52,16 +75,25 @@ public class Player : MonoBehaviour
     {
 
         SpaceShipCaller();
+        rbPlayer = GetComponent<Rigidbody>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Player Controller
+        if (ApplicationUtil.platform == RuntimePlatform.Android)
+        {
+            //do android code
+            PlayerControlGyroscope(movementSpeed);
+        }
+        else if(ApplicationUtil.platform == RuntimePlatform.WindowsPlayer)
+        {
+            //do PC code
+            PlayerControl("MovingLeft", "MovingRight", movementSpeed);
+        }
 
-        PlayerControl("MovingLeft", "MovingRight", movementSpeed);
-
-        //collider system
         //HP System
         if (spaceShipHP <= 0)
         {
@@ -79,6 +111,12 @@ public class Player : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        rbPlayer.velocity = new Vector3(dirX, 0f);
+    }
+
+    #region SpaceShipCaller
     void SpaceShipCaller()
     {
         string choosenSpaceShip = PlayerPrefs.GetString("TheChoosenOne");
@@ -106,8 +144,15 @@ public class Player : MonoBehaviour
             }
         }
     }
+    #endregion
 
     #region PlayerAction
+
+    void PlayerControlGyroscope(float movementSpeed)
+    {
+        dirX = Input.acceleration.x * movementSpeed;
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -42.9f, 42.9f), transform.position.y);
+    }
 
     void PlayerControl(string moveLeftKey, string moveRightKey, float movementSpeed/*, float booster*/)
     {

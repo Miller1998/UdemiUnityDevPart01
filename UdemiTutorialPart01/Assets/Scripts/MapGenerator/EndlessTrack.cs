@@ -8,15 +8,12 @@ public class EndlessTrack : MonoBehaviour
     [Header("Game Object Caller")]
     public GameObject invisibleTrack;
     public GameObject parentTrack;
-    public int challengePlayerEvery = 20;
     #endregion
     #region Private_Variables
     [SerializeField]
     float generatedSpeed;
     [SerializeField]
     float deletionDistance = -200;//similiar with field of view
-    [SerializeField]
-    float addSpeed = 20;
 
     #endregion
     // Start is called before the first frame update
@@ -30,11 +27,8 @@ public class EndlessTrack : MonoBehaviour
     {
         int totalScore = PlayerPrefs.GetInt("TotalScore");
 
-        if (totalScore == challengePlayerEvery)
-        {
-            GeneratedInvisibleTrackField(generatedSpeed + addSpeed);
-            challengePlayerEvery += 20;
-        }
+        GeneratedInvisibleTrackField(generatedSpeed);
+
     
     }
 
