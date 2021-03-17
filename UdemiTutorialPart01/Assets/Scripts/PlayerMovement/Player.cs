@@ -105,8 +105,8 @@ public class Player : MonoBehaviour
         else
         {
             //Score Added due to the how long player survive
-            scoreTotal = scoreTotal + 2;
-            PlayerPrefs.SetInt("TotalScore", scoreTotal);
+            //scoreTotal = scoreTotal + 2;
+            //PlayerPrefs.SetInt("TotalScore", scoreTotal);
         }
 
     }
@@ -188,9 +188,9 @@ public class Player : MonoBehaviour
                 spaceShipHP = spaceShipHP + obstacleDatas[i].additionalHP;
                 
                 //added score based on how many Fuel that we get
-                //scoreTotal = scoreTotal + 2;
+                scoreTotal = scoreTotal + 2;
                 //save in the game data
-                //PlayerPrefs.SetInt("TotalScore", scoreTotal);
+                PlayerPrefs.SetInt("TotalScore", scoreTotal);
             
             }
             else if (other.gameObject.tag.Contains(obstacleDatas[i].itemName) && obstacleDatas[i].itemName.Contains("Asteroid01"))
